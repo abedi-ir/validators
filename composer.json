@@ -1,0 +1,25 @@
+{
+    "name": "jalno/validators",
+    "description": "Jalno base validators",
+    "autoload": {
+        "psr-4": {
+            "Jalno\\Validators\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "require": {
+        "jalno/lumen": "^1.0.0"
+    },
+    "extra": {
+        "jalno": {
+            "package": "Jalno\\Validators\\Package"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}

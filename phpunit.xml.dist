@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+  bootstrap="vendor/autoload.php"
+  backupStaticAttributes="false"
+  colors="true"
+  verbose="true"
+  stopOnError="false"
+  stopOnFailure="false"
+  backupGlobals="false"
+  processIsolation="false"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+	<report>
+		<html outputDirectory="html"/>
+	</report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Unit">
+      <directory suffix="Test.php">./tests/Unit</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
