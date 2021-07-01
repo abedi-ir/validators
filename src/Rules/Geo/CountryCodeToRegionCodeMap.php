@@ -14,9 +14,9 @@ class CountryCodeToRegionCodeMap
 {
 
 	/**
-	 * @property array<int,string[]>
+	 * @var array<int,string[]> $CC2RMap
 	 */
-	public static $CC2RMap = array(
+	public static array $CC2RMap = array(
 		1 => array(
 			'US', 'AG', 'AI', 'AS','BB',
 			'BM', 'BS', 'CA', 'DM', 'DO',
@@ -253,6 +253,9 @@ class CountryCodeToRegionCodeMap
 		998 => array('UZ'),
 	);
 
+	/**
+	 * @var array<string,int> $regionCodeToCountryCodeMap
+	 */
 	private static array $regionCodeToCountryCodeMap = array();
 
 	/**

@@ -12,12 +12,12 @@ class ValidatorsServiceProvider extends ServiceProvider
 	/**
      * @inheritdoc
      */
-	public function boot()
+	public function boot(): void
 	{
 		$this->registerDefaultVlidators();
 	}
 
-	protected function registerDefaultVlidators()
+	protected function registerDefaultVlidators(): void
 	{
 		foreach (array(
 			Rules\CellphoneValidatorRule::class

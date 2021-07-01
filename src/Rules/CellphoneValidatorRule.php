@@ -12,9 +12,6 @@ class CellphoneValidatorRule implements IValidatorRule
 
     public static function extend(): void
     {
-        /**
-         * @param array{string|{"code":string,"number":string}}|string $value
-         */
         Validator::extend("cellphone", function(string $attribute, $value, array $parameters, ValidatorContract $validator) {
             return (new CellphoneValidatorRule)->setValidator($validator)->passes($attribute, $value);
         });
@@ -35,22 +32,20 @@ class CellphoneValidatorRule implements IValidatorRule
     /**
      * @property string $defaultCountryCode that is default country in ISO 3166-1 alpha-2 format
      */
-    protected static $defaultCountryCode = "";
+    protected static string $defaultCountryCode = "";
 
     protected ?ValidatorContract $validator;
 
     /**
-     * @property string[]|array{"code":string,"number":string}
+     * @var array<array<string,string>|string>
      */
     protected array $values = [];
 
-    /**
-     * @property bool
-     */
     protected bool $combinedOutput = true;
 
     /**
      * @inheritdoc
+     * @param ValidatorContract $validator
      */
     public function setValidator($validator)
     {
@@ -62,7 +57,7 @@ class CellphoneValidatorRule implements IValidatorRule
     /**
      * @inheritdoc
      * 
-     * @param array<"code":string,"number":string>|string $value
+     * @param array{code:string,number:string}|string|string[] $value
      */
     public function passes($attribute, $value)
     {
@@ -130,14 +125,14 @@ class CellphoneValidatorRule implements IValidatorRule
 
         if ($this->values) {
             $found = false;
-            foreach ($this->values as $value) {
-                if (is_string($value)) {
-                    if ($value == $combinedData) {
+            foreach ($this->values as $item) {
+                if (is_string($item)) {
+                    if ($item == $combinedData) {
                         $found = true;
                         break;
                     }
-                } else if (is_array($value) and isset($value['code'], $value['number'])) {
-                    if ($value['code'] == $value['code'] and $value['number'] == $value['number']) {
+                } elseif (is_array($item) and isset($item['code'], $item['number'])) {
+                    if ($item['code'] == $value['code'] and $item['number'] == $value['number']) {
                         $found = true;
                         break;
                     }
@@ -148,18 +143,22 @@ class CellphoneValidatorRule implements IValidatorRule
             }
         }
 
-        $this->validator->setData(array(
-            $attribute => $this->combinedOutput ? $combinedData : array(
-                'code' => $value['code'],
-                'number' => $value['number'],
-            ),
-        ));
+        if ($this->validator and method_exists($this->validator, "setData")) {
+            $this->validator->setData(array(
+                $attribute => $this->combinedOutput ? $combinedData : array(
+                    'code' => $value['code'],
+                    'number' => $value['number'],
+                ),
+            ));
+        }
 
         return true;
     }
 
     /**
      * @inheritdoc
+     * 
+     * @return string|string[]|array<string,string>
      */
     public function message()
     {
@@ -167,14 +166,14 @@ class CellphoneValidatorRule implements IValidatorRule
     }
 
     /**
-     * @property string[]|array{"code":string,"number":string} $values
+     * @param string[]|array{"code":string,"number":string} $values
      */
-    public function setValues(array $values)
+    public function setValues(array $values): void
     {
         $this->values = $values;
     }
 
-    public function setCombinedOutput(bool $val)
+    public function setCombinedOutput(bool $val): void
     {
         $this->combinedOutput = $val;
     }

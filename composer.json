@@ -14,12 +14,20 @@
     "require": {
         "jalno/lumen": "^1.0.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "nunomaduro/larastan": "^0.7.6",
+        "orchestra/testbench": "^6.18.0"
+    },
+    "scripts": {
+        "test:types": "./vendor/phpstan/phpstan/phpstan analyse",
+        "test": [
+            "@test:types"
+        ]
+    },
     "extra": {
         "jalno": {
             "package": "Jalno\\Validators\\Package"
         }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9"
     }
 }
